@@ -27,19 +27,19 @@ public class Album {
 	private User user;
 	
 	@Persistent(mappedBy = "album")
-	private List<Image> images;
+	private List<Image> images = new ArrayList<Image>();
 	
 	@Persistent
 	private Timestamp lastTimeModified;
 	
 	public Album() {}
 	
-	public Album(String title, String description, User user) {
+	public Album(String title, String description, User user, Timestamp lastTimeModified) {
 		super();
 		this.title = title;
 		this.description = description;
-		this.images = new ArrayList<Image>();
 		this.user = user;
+		this.lastTimeModified = lastTimeModified;
 	}	
 
 	public Key getId() {

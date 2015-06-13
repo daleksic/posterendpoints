@@ -44,7 +44,7 @@ public class Image {
 	
 	public Image() {}
 	
-	public Image(String title, String location, String url, Timestamp dateCreated, String contentType, int width, int height, Album album) {
+	public Image(String title, String location, String url, Timestamp dateCreated, String contentType, int width, int height, Album album, Timestamp lastTimeModified) {
 		super();
 		this.title = title;
 		this.location = location;
@@ -54,6 +54,7 @@ public class Image {
 		this.width = width;
 		this.height = height;
 		this.album = album;
+		this.lastTimeModified = lastTimeModified;
 	}	
 	
 	public Key getId() {

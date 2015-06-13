@@ -27,19 +27,19 @@ public class User {
 	private String password;
 	
 	@Persistent(mappedBy="user")
-	private List<Album> albums;
+	private List<Album> albums = new ArrayList<Album>();
 	
 	@Persistent
 	private Timestamp lastTimeModified;
 	
 	public User() {}
 	
-	public User(String fullName, String email, String password) {
+	public User(String fullName, String email, String password, Timestamp lastTimeModified) {
 		super();
 		this.fullName = fullName;
 		this.email = email;
 		this.password = password;
-		this.albums = new ArrayList<Album>();
+		this.lastTimeModified = lastTimeModified;
 	}
 
 	public Key getId() {
