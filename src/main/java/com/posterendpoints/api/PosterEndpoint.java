@@ -23,7 +23,6 @@ import com.posterendpoints.User;
 @Api(name = "posterendpoint", namespace = @ApiNamespace(ownerDomain = "poster.com", ownerName = "poster.com", packagePath = "api"))
 public class PosterEndpoint {
 
-
 	/**
 	 * This method lists all the entities inserted in datastore.
 	 * It uses HTTP GET method and paging support.
@@ -108,7 +107,6 @@ public class PosterEndpoint {
 				}
 			 }
 			mgr.makePersistent(user);
-			 
 		} finally {
 			mgr.close();
 		}
@@ -127,9 +125,11 @@ public class PosterEndpoint {
 	public User updateUser(User user) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (!containsUser(user)) {
-				throw new EntityNotFoundException("Object does not exist");
-			}
+			 if (user.getId() != null) {
+				if (!containsUser(user)) {
+					throw new EntityNotFoundException("Object does not exist");
+				}
+			 }
 			mgr.makePersistent(user);
 		} finally {
 			mgr.close();
@@ -166,6 +166,7 @@ public class PosterEndpoint {
 		}
 		return contains;
 	}
+	
 
 	/**
 	 * This method lists all the entities inserted in datastore.
@@ -269,8 +270,10 @@ public class PosterEndpoint {
 	public Album updateAlbum(Album album) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (!containsAlbum(album)) {
-				throw new EntityNotFoundException("Object does not exist");
+			if (album.getId() != null) {
+				if (!containsAlbum(album)) {
+					throw new EntityNotFoundException("Object does not exist");
+				}
 			}
 			mgr.makePersistent(album);
 		} finally {
@@ -412,8 +415,10 @@ public class PosterEndpoint {
 	public Image updateImage(Image image) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (!containsImage(image)) {
-				throw new EntityNotFoundException("Object does not exist");
+			if (image.getId() != null) {
+				if (!containsImage(image)) {
+					throw new EntityNotFoundException("Object does not exist");
+				}
 			}
 			mgr.makePersistent(image);
 		} finally {
@@ -451,6 +456,7 @@ public class PosterEndpoint {
 		}
 		return contains;
 	}
+
 
 
 	private static PersistenceManager getPersistenceManager() {

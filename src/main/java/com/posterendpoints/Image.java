@@ -16,6 +16,9 @@ public class Image {
 	private Key id;
 	
 	@Persistent
+	private Integer androidId;
+	
+	@Persistent
 	private String title;
 	
 	@Persistent
@@ -40,12 +43,16 @@ public class Image {
 	private Timestamp lastTimeModified;
 	
 	@Persistent
+	private String imageBlob;
+	
+	@Persistent
 	private Album album;
 	
 	public Image() {}
 	
-	public Image(String title, String location, String url, Timestamp dateCreated, String contentType, int width, int height, Album album, Timestamp lastTimeModified) {
+	public Image(String title, Integer androidId, String location, String url, Timestamp dateCreated, String contentType, int width, int height, String imageBlob, Album album) {
 		super();
+		this.androidId = androidId;
 		this.title = title;
 		this.location = location;
 		this.url = url;
@@ -53,12 +60,20 @@ public class Image {
 		this.contentType = contentType;
 		this.width = width;
 		this.height = height;
+		this.imageBlob = imageBlob;
 		this.album = album;
-		this.lastTimeModified = lastTimeModified;
 	}	
 	
 	public Key getId() {
 		return id;
+	}
+	
+	public Integer getAndroidId() {
+		return androidId;
+	}
+
+	public void setAndroidId(Integer androidId) {
+		this.androidId = androidId;
 	}
 
 	public String getTitle() {
@@ -124,7 +139,15 @@ public class Image {
 	public void setLastTimeModified(Timestamp lastTimeModified) {
 		this.lastTimeModified = lastTimeModified;
 	}
-	
+		
+	public String getImageBlob() {
+		return imageBlob;
+	}
+
+	public void setImageBlob(String imageBlob) {
+		this.imageBlob = imageBlob;
+	}
+
 	public Album getAlbum() {
 		return album;
 	}

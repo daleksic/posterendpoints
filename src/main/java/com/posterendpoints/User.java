@@ -3,7 +3,9 @@ package com.posterendpoints;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+
 import com.google.appengine.api.datastore.Key;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -18,6 +20,9 @@ public class User {
 	private Key id;
 	
 	@Persistent
+	private Integer androidId;
+	
+	@Persistent
 	private String fullName;
 	
 	@Persistent
@@ -27,23 +32,32 @@ public class User {
 	private String password;
 	
 	@Persistent(mappedBy="user")
-	private List<Album> albums = new ArrayList<Album>();
+	private List<Album> albums;
 	
 	@Persistent
 	private Timestamp lastTimeModified;
 	
 	public User() {}
 	
-	public User(String fullName, String email, String password, Timestamp lastTimeModified) {
+	public User(Integer androidId, String fullName, String email, String password) {
 		super();
+		this.androidId = androidId;
 		this.fullName = fullName;
 		this.email = email;
 		this.password = password;
-		this.lastTimeModified = lastTimeModified;
+		this.albums = new ArrayList<Album>();
 	}
 
 	public Key getId() {
 		return id;
+	}
+	
+	public Integer getAndroidId() {
+		return androidId;
+	}
+
+	public void setAndroidId(Integer androidId) {
+		this.androidId = androidId;
 	}
 
 	public String getFullName() {
