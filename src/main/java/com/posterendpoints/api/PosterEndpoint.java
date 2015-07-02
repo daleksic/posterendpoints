@@ -167,6 +167,68 @@ public class PosterEndpoint {
 		return contains;
 	}
 	
+	/**
+	 * This method gets the entity having androidId. It uses HTTP GET method.
+	 *
+	 * @param androidId the primary key of the java bean.
+	 * @return The entity with androidId.
+	 */
+	@SuppressWarnings("unchecked")
+	@ApiMethod(name = "getUserByAndroidId", path="posterendpoint/user/{androidId}/")
+	public User getUserByAndroidId(@Named("androidId") Long androidId) {
+		System.out.println("**************PARAMETAR: " + androidId);
+		PersistenceManager mgr = getPersistenceManager();
+		User user = null;
+		try {
+			Query q = mgr.newQuery(User.class);
+			q.setFilter("androidId == " + androidId );
+			List<User> users = (List<User>) q.execute();
+			 if (!users.isEmpty()){ 
+				System.out.println("**************USERS NO: " + users.size());
+                user = users.get(0);                
+             }else{
+                 //handle error
+
+             }			
+		} finally {
+			mgr.close();
+		}
+		return user;
+	}
+	
+	/**
+	 * This method removes the entity with androidId.
+	 * It uses HTTP DELETE method.
+	 *
+	 * @param androidId attribute of the entity to be deleted.
+	 */
+	@SuppressWarnings("unchecked")
+	@ApiMethod(name = "removeUserByAndroidId", path="posterendpoint/user/{androidId}/")
+	public void removeUserByAndroidId(@Named("androidId") Long androidId) {
+		System.out.println("**************PARAMETAR: " + androidId);
+		PersistenceManager mgr = getPersistenceManager();
+		User user = null;
+		try {			
+			Query q = mgr.newQuery(User.class);
+			q.setFilter("androidId == " + androidId );
+			//q.setFilter("androidId == androidIdParam");
+			//q.declareParameters("Integer androidIdParam");
+
+			List<User> users = (List<User>) q.execute();
+			 if (!users.isEmpty()){
+                // for (User u : users){
+                	 user = users.get(0);
+                //     break;  //fake loop.
+                // }
+             }else{
+                 //handle error
+             }		
+			mgr.deletePersistent(user);
+		} finally {
+			mgr.close();
+		}
+	}
+	
 
 	/**
 	 * This method lists all the entities inserted in datastore.
@@ -310,6 +372,93 @@ public class PosterEndpoint {
 			mgr.close();
 		}
 		return contains;
+	}
+	
+	/**
+	 * This method removes the entity with androidId.
+	 * It uses HTTP DELETE method.
+	 *
+	 * @param androidId attribute of the entity to be deleted.
+	 */
+	@SuppressWarnings("unchecked")
+	@ApiMethod(name = "removeAlbumByAndroidId", path="posterendpoint/album/{androidId}/")
+	public void removeAlbumByAndroidId(@Named("androidId") Long androidId) {
+		PersistenceManager mgr = getPersistenceManager();
+		Album album = null;
+		try {			
+			Query q = mgr.newQuery(Album.class);
+			q.setFilter("androidId == " + androidId);
+			List<Album> albums = (List<Album>) q.execute();
+			 if (!albums.isEmpty()){
+                 for (Album a : albums){
+                	 album = a;
+                     break;  //fake loop.
+                 }
+             }else{
+                 //handle error
+             }		
+			mgr.deletePersistent(album);
+		} finally {
+			mgr.close();
+		}
+	}
+	
+
+	/**
+	 * This method gets the entity having androidId. It uses HTTP GET method.
+	 *
+	 * @param androidId the primary key of the java bean.
+	 * @return The entity with androidId.
+	 */
+	@SuppressWarnings("unchecked")
+	@ApiMethod(name = "getAlbumByAndroidId", path="posterendpoint/album/{androidId}/")
+	public Album getAlbumByAndroidId(@Named("androidId") Long androidId) {
+		PersistenceManager mgr = getPersistenceManager();
+		Album album = null;
+		try {
+			Query q = mgr.newQuery(Album.class);
+			q.setFilter("androidId == " + androidId);
+			List<Album> albums = (List<Album>) q.execute();
+			 if (!albums.isEmpty()){
+                 for (Album a : albums){
+                	 album = a;
+                     break;  //fake loop.
+                 }
+             }else{
+                 //handle error
+             }			
+		} finally {
+			mgr.close();
+		}
+		return album;
+	}
+	
+	/**
+	 * This method gets the entity having androidId. It uses HTTP GET method.
+	 *
+	 * @param androidId the primary key of the java bean.
+	 * @return The entity with androidId.
+	 */
+	@SuppressWarnings("unchecked")
+	@ApiMethod(name = "getAlbumsByUser", path="posterendpoint/album/user/")
+	public List<Album> getAlbumsByUser(User user) {
+		PersistenceManager mgr = getPersistenceManager();
+		List<Album> album = null;
+		try {
+			Query q = mgr.newQuery(Album.class);
+			q.setFilter("user == " + user);
+			List<Album> albums = (List<Album>) q.execute();
+			 if (!albums.isEmpty()){
+                 
+                album = albums;
+                  
+             }else{
+                 //handle error
+             }			
+		} finally {
+			mgr.close();
+		}
+		return album;
 	}
 	
 
@@ -456,8 +605,90 @@ public class PosterEndpoint {
 		}
 		return contains;
 	}
+	
+	/**
+	 * This method removes the entity with androidId.
+	 * It uses HTTP DELETE method.
+	 *
+	 * @param androidId attribute of the entity to be deleted.
+	 */
+	@ApiMethod(name = "removeImageByAndroidId", path="posterendpoint/image/{androidId}/")
+	public void removeImageByAndroidId(@Named("androidId") Long androidId) {
+		PersistenceManager mgr = getPersistenceManager();
+		Image image = null;
+		try {			
+			Query q = mgr.newQuery(Image.class);
+			q.setFilter("androidId == " + androidId);
+			List<Image> images = (List<Image>) q.execute();
+			 if (!images.isEmpty()){
+                 for (Image i : images){
+                	 image = i;
+                     break;  //fake loop.
+                 }
+             }else{
+                 //handle error
+             }		
+			mgr.deletePersistent(image);
+		} finally {
+			mgr.close();
+		}
+	}
 
-
+	/**
+	 * This method gets the entity having androidId. It uses HTTP GET method.
+	 *
+	 * @param androidId the primary key of the java bean.
+	 * @return The entity with androidId.
+	 */
+	@ApiMethod(name = "getImageByAndroidId", path="posterendpoint/image/{androidId}/")
+	public Image getImageByAndroidId(@Named("androidId") Long androidId) {
+		PersistenceManager mgr = getPersistenceManager();
+		Image image = null;
+		try {
+			Query q = mgr.newQuery(Image.class);
+			q.setFilter("androidId == " + androidId);
+			List<Image> images = (List<Image>) q.execute();
+			 if (!images.isEmpty()){
+                 for (Image i : images){
+                	 image = i;
+                     break;  //fake loop.
+                 }
+             }else{
+                 //handle error
+             }			
+		} finally {
+			mgr.close();
+		}
+		return image;
+	}
+	
+	/**
+	 * This method gets the entity having androidId. It uses HTTP GET method.
+	 *
+	 * @param androidId the primary key of the java bean.
+	 * @return The entity with androidId.
+	 */
+	@SuppressWarnings("unchecked")
+	@ApiMethod(name = "getImagesByAlbum", path="posterendpoint/image/album/")
+	public List<Image> getImagesByAlbum(Album album) {
+		PersistenceManager mgr = getPersistenceManager();
+		List<Image> imagesResponse = null;
+		try {
+			Query q = mgr.newQuery(Image.class);
+			q.setFilter("album == " + album);
+			List<Image> imagess = (List<Image>) q.execute();
+			 if (!imagess.isEmpty()){
+                 
+				 imagesResponse = imagess;
+                  
+             }else{
+                 //handle error
+             }			
+		} finally {
+			mgr.close();
+		}
+		return imagesResponse;
+	}
 
 	private static PersistenceManager getPersistenceManager() {
 		return PMF.get().getPersistenceManager();

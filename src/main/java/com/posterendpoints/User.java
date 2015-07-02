@@ -20,7 +20,7 @@ public class User {
 	private Key id;
 	
 	@Persistent
-	private Integer androidId;
+	private Long androidId;
 	
 	@Persistent
 	private String fullName;
@@ -39,7 +39,7 @@ public class User {
 	
 	public User() {}
 	
-	public User(Integer androidId, String fullName, String email, String password) {
+	public User(Long androidId, String fullName, String email, String password) {
 		super();
 		this.androidId = androidId;
 		this.fullName = fullName;
@@ -52,11 +52,11 @@ public class User {
 		return id;
 	}
 	
-	public Integer getAndroidId() {
+	public Long getAndroidId() {
 		return androidId;
 	}
 
-	public void setAndroidId(Integer androidId) {
+	public void setAndroidId(Long androidId) {
 		this.androidId = androidId;
 	}
 

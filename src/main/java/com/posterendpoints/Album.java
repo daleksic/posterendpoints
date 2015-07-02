@@ -20,7 +20,7 @@ public class Album {
 	private Key id;
 	
 	@Persistent
-	private Integer androidId;
+	private Long androidId;
 	
 	@Persistent
 	private String title;
@@ -39,7 +39,7 @@ public class Album {
 	
 	public Album() {}
 	
-	public Album(Integer androidId, String title, String description, User user) {
+	public Album(Long androidId, String title, String description, User user) {
 		super();
 		this.androidId = androidId;
 		this.title = title;
@@ -52,11 +52,11 @@ public class Album {
 		return id;
 	}
 	
-	public Integer getAndroidId() {
+	public Long getAndroidId() {
 		return androidId;
 	}
 
-	public void setAndroidId(Integer androidId) {
+	public void setAndroidId(Long androidId) {
 		this.androidId = androidId;
 	}
 

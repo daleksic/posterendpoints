@@ -16,7 +16,7 @@ public class Image {
 	private Key id;
 	
 	@Persistent
-	private Integer androidId;
+	private Long androidId;
 	
 	@Persistent
 	private String title;
@@ -50,7 +50,7 @@ public class Image {
 	
 	public Image() {}
 	
-	public Image(String title, Integer androidId, String location, String url, Timestamp dateCreated, String contentType, int width, int height, String imageBlob, Album album) {
+	public Image(String title, Long androidId, String location, String url, Timestamp dateCreated, String contentType, int width, int height, String imageBlob, Album album) {
 		super();
 		this.androidId = androidId;
 		this.title = title;
@@ -68,11 +68,11 @@ public class Image {
 		return id;
 	}
 	
-	public Integer getAndroidId() {
+	public Long getAndroidId() {
 		return androidId;
 	}
 
-	public void setAndroidId(Integer androidId) {
+	public void setAndroidId(Long androidId) {
 		this.androidId = androidId;
 	}
 
