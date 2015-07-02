@@ -28,7 +28,7 @@ public class Image {
 	private String url;
 	
 	@Persistent
-	private Timestamp dateCreated;
+	private String dateCreated;
 	
 	@Persistent
 	private String contentType;
@@ -40,17 +40,17 @@ public class Image {
 	private int height;
 	
 	@Persistent
-	private Timestamp lastTimeModified;
+	private String lastTimeModified;
 	
 	@Persistent
 	private String imageBlob;
 	
-	@Persistent
+	/*@Persistent
 	private Album album;
-	
+	*/
 	public Image() {}
 	
-	public Image(String title, Long androidId, String location, String url, Timestamp dateCreated, String contentType, int width, int height, String imageBlob, Album album) {
+	public Image(String title, Long androidId, String location, String url, String dateCreated, String contentType, int width, int height, String imageBlob) {
 		super();
 		this.androidId = androidId;
 		this.title = title;
@@ -61,7 +61,7 @@ public class Image {
 		this.width = width;
 		this.height = height;
 		this.imageBlob = imageBlob;
-		this.album = album;
+		//this.album = album;
 	}	
 	
 	public Key getId() {
@@ -100,11 +100,11 @@ public class Image {
 		this.url = url;
 	}
 
-	public Timestamp getDateCreated() {
+	public String getDateCreated() {
 		return dateCreated;
 	}
 
-	public void setDateCreated(Timestamp dateCreated) {
+	public void setDateCreated(String dateCreated) {
 		this.dateCreated = dateCreated;
 	}
 
@@ -132,11 +132,11 @@ public class Image {
 		this.height = height;
 	}
 
-	public Timestamp getLastTimeModified() {
+	public String getLastTimeModified() {
 		return lastTimeModified;
 	}
 
-	public void setLastTimeModified(Timestamp lastTimeModified) {
+	public void setLastTimeModified(String lastTimeModified) {
 		this.lastTimeModified = lastTimeModified;
 	}
 		
@@ -148,13 +148,13 @@ public class Image {
 		this.imageBlob = imageBlob;
 	}
 
-	public Album getAlbum() {
+	/*public Album getAlbum() {
 		return album;
 	}
 
 	public void setAlbum(Album album) {
 		this.album = album;
-	}
+	}*/
 
 	@Override
 	public int hashCode() {

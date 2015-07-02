@@ -28,24 +28,24 @@ public class Album {
 	@Persistent
 	private String description;
 	
-	@Persistent
-	private User user;
+	//@Persistent
+	//private User user;
 	
-	@Persistent(mappedBy = "album")
+	@Persistent
 	private List<Image> images;
 	
 	@Persistent
-	private Timestamp lastTimeModified;
+	private String lastTimeModified;
 	
 	public Album() {}
 	
-	public Album(Long androidId, String title, String description, User user) {
+	public Album(Long androidId, String title, String description) {
 		super();
 		this.androidId = androidId;
 		this.title = title;
 		this.description = description;
 		this.images = new ArrayList<Image>();
-		this.user = user;
+		//this.user = user;
 	}	
 
 	public Key getId() {
@@ -76,14 +76,14 @@ public class Album {
 		this.description = description;
 	}
 
-	public User getUser() {
+	/*public User getUser() {
 		return user;
 	}
 
 	public void setUser(User user) {
 		this.user = user;
 	}
-
+*/
 	public List<Image> getImages() {
 		return images;
 	}
@@ -92,11 +92,11 @@ public class Album {
 		this.images = images;
 	}
 
-	public Timestamp getLastTimeModified() {
+	public String getLastTimeModified() {
 		return lastTimeModified;
 	}
 
-	public void setLastTimeModified(Timestamp lastTimeModified) {
+	public void setLastTimeModified(String lastTimeModified) {
 		this.lastTimeModified = lastTimeModified;
 	}
 	

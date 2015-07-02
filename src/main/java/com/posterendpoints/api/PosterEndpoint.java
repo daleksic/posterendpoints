@@ -440,12 +440,14 @@ public class PosterEndpoint {
 	 * @return The entity with androidId.
 	 */
 	@SuppressWarnings("unchecked")
-	@ApiMethod(name = "getAlbumsByUser", path="posterendpoint/album/user/")
-	public List<Album> getAlbumsByUser(User user) {
+	@ApiMethod(name = "getAlbumsByUser", path="posterendpoint/album/u/{userId}/")
+	public List<Album> getAlbumsByUser(@Named("userId") Long userId) {
 		PersistenceManager mgr = getPersistenceManager();
 		List<Album> album = null;
+		User user = null;
 		try {
 			Query q = mgr.newQuery(Album.class);
+			user = mgr.getObjectById(User.class, userId);
 			q.setFilter("user == " + user);
 			List<Album> albums = (List<Album>) q.execute();
 			 if (!albums.isEmpty()){
@@ -669,12 +671,14 @@ public class PosterEndpoint {
 	 * @return The entity with androidId.
 	 */
 	@SuppressWarnings("unchecked")
-	@ApiMethod(name = "getImagesByAlbum", path="posterendpoint/image/album/")
-	public List<Image> getImagesByAlbum(Album album) {
+	@ApiMethod(name = "getImagesByAlbum", path="posterendpoint/image/a/{albumId}/")
+	public List<Image> getImagesByAlbum(@Named("albumId") Long albumId) {
 		PersistenceManager mgr = getPersistenceManager();
 		List<Image> imagesResponse = null;
+		Album album = null;
 		try {
 			Query q = mgr.newQuery(Image.class);
+			album = mgr.getObjectById(Album.class, albumId);
 			q.setFilter("album == " + album);
 			List<Image> imagess = (List<Image>) q.execute();
 			 if (!imagess.isEmpty()){

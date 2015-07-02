@@ -31,11 +31,11 @@ public class User {
 	@Persistent
 	private String password;
 	
-	@Persistent(mappedBy="user")
+	@Persistent
 	private List<Album> albums;
 	
 	@Persistent
-	private Timestamp lastTimeModified;
+	private String lastTimeModified;
 	
 	public User() {}
 	
@@ -92,11 +92,11 @@ public class User {
 		this.albums = albums;
 	}
 
-	public Timestamp getLastTimeModified() {
+	public String getLastTimeModified() {
 		return lastTimeModified;
 	}
 
-	public void setLastTimeModified(Timestamp lastTimeModified) {
+	public void setLastTimeModified(String lastTimeModified) {
 		this.lastTimeModified = lastTimeModified;
 	}
 	
