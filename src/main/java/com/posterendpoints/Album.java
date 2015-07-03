@@ -1,5 +1,6 @@
 package com.posterendpoints;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,16 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Album {
+public class Album implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -7084604133091609955L;
 
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key id;
+	private Key key;
 	
 	@Persistent
 	private Long androidId;
@@ -32,12 +38,12 @@ public class Album {
 	//private User user;
 	
 	@Persistent
-	private List<Image> images;
+	private List<Image> images = new ArrayList<Image>();
 	
 	@Persistent
 	private String lastTimeModified;
 	
-	public Album() {}
+	/*public Album() {}
 	
 	public Album(Long androidId, String title, String description) {
 		super();
@@ -47,9 +53,12 @@ public class Album {
 		this.images = new ArrayList<Image>();
 		//this.user = user;
 	}	
-
-	public Key getId() {
-		return id;
+*/
+	public Key getKey() {
+		return key;
+	}
+	public void setKey(Key key) {
+		this.key = key;
 	}
 	
 	public Long getAndroidId() {
@@ -99,12 +108,12 @@ public class Album {
 	public void setLastTimeModified(String lastTimeModified) {
 		this.lastTimeModified = lastTimeModified;
 	}
-	
+/*	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		return result;
 	}
  
@@ -117,17 +126,17 @@ public class Album {
 		if (getClass() != obj.getClass())
 			return false;
 		Album other = (Album) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (key == null) {
+			if (other.key != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!key.equals(other.key))
 			return false;
 		return true;
 	}
- 
+ */
 	@Override
 	public String toString() {
-		return "Album [id=" + id + ", title=" + title + ", description="
+		return "Album [id=" + key + ", title=" + title + ", description="
 				+ description + "]";
 	}
 }

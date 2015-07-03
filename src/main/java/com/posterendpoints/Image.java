@@ -1,7 +1,10 @@
 package com.posterendpoints;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
+
 import com.google.appengine.api.datastore.Key;
+
 import javax.jdo.annotations.IdGeneratorStrategy;
 import javax.jdo.annotations.IdentityType;
 import javax.jdo.annotations.PersistenceCapable;
@@ -9,11 +12,16 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class Image {
+public class Image implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -8330219976328828433L;
 
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key id;
+	private Key key;
 	
 	@Persistent
 	private Long androidId;
@@ -48,7 +56,7 @@ public class Image {
 	/*@Persistent
 	private Album album;
 	*/
-	public Image() {}
+	/*public Image() {}
 	
 	public Image(String title, Long androidId, String location, String url, String dateCreated, String contentType, int width, int height, String imageBlob) {
 		super();
@@ -63,9 +71,12 @@ public class Image {
 		this.imageBlob = imageBlob;
 		//this.album = album;
 	}	
-	
-	public Key getId() {
-		return id;
+	*/
+	public Key getKey() {
+		return key;
+	}
+	public void setKey(Key key) {
+		this.key = key;
 	}
 	
 	public Long getAndroidId() {
@@ -155,12 +166,12 @@ public class Image {
 	public void setAlbum(Album album) {
 		this.album = album;
 	}*/
-
+/*
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		return result;
 	}
  
@@ -173,17 +184,17 @@ public class Image {
 		if (getClass() != obj.getClass())
 			return false;
 		Image other = (Image) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (key == null) {
+			if (other.key != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!key.equals(other.key))
 			return false;
 		return true;
 	}
- 
+ */
 	@Override
 	public String toString() {
-		return "Image [id=" + id + ", title=" + title + ", url="
+		return "Image [id=" + key + ", title=" + title + ", url="
 				+ url + "]";
 	}
 }

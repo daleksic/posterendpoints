@@ -1,5 +1,6 @@
 package com.posterendpoints;
 
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
@@ -13,11 +14,16 @@ import javax.jdo.annotations.Persistent;
 import javax.jdo.annotations.PrimaryKey;
 
 @PersistenceCapable(identityType = IdentityType.APPLICATION)
-public class User {
+public class User implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4942446880572280041L;
 
 	@PrimaryKey
     @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
-	private Key id;
+	private Key key;
 	
 	@Persistent
 	private Long androidId;
@@ -32,12 +38,12 @@ public class User {
 	private String password;
 	
 	@Persistent
-	private List<Album> albums;
+	private List<Album> albums  = new ArrayList<Album>();
 	
 	@Persistent
 	private String lastTimeModified;
 	
-	public User() {}
+	/*public User() {}
 	
 	public User(Long androidId, String fullName, String email, String password) {
 		super();
@@ -47,9 +53,12 @@ public class User {
 		this.password = password;
 		this.albums = new ArrayList<Album>();
 	}
-
-	public Key getId() {
-		return id;
+*/
+	public Key getKey() {
+		return key;
+	}
+	public void setKey(Key key) {
+		this.key = key;
 	}
 	
 	public Long getAndroidId() {
@@ -99,12 +108,12 @@ public class User {
 	public void setLastTimeModified(String lastTimeModified) {
 		this.lastTimeModified = lastTimeModified;
 	}
-	
+/*	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((key == null) ? 0 : key.hashCode());
 		return result;
 	}
  
@@ -117,17 +126,17 @@ public class User {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (key == null) {
+			if (other.key != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!key.equals(other.key))
 			return false;
 		return true;
 	}
- 
+ */
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", fullName=" + fullName + ", email="
+		return "User [id=" + key + ", fullName=" + fullName + ", email="
 				+ email + "]";
 	}
 }

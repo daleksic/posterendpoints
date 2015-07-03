@@ -2,14 +2,12 @@ package com.posterendpoints.api;
 
 import java.util.HashMap;
 import java.util.List;
-
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
-
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -101,7 +99,7 @@ public class PosterEndpoint {
 	public User insertUser(User user) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			 if (user.getId() != null) {
+			 if (user.getKey() != null) {
 				if (containsUser(user)) {
 					throw new EntityExistsException("Object already exists");
 				}
@@ -124,16 +122,26 @@ public class PosterEndpoint {
 	@ApiMethod(name = "updateUser")
 	public User updateUser(User user) {
 		PersistenceManager mgr = getPersistenceManager();
-		try {
-			 if (user.getId() != null) {
-				if (!containsUser(user)) {
-					throw new EntityNotFoundException("Object does not exist");
-				}
-			 }
-			mgr.makePersistent(user);
-		} finally {
+		System.out.println("UPDATE USER START");
+		System.out.println("UPDATE USER ID: " + user.getKey().getId());
+
+		try {		
+			if (!containsUser(user)) {
+				System.out.println("!CONTAINS USER");
+				throw new EntityNotFoundException("Object does not exist");
+			}
+		    System.out.println("CONTAINS USER TRUE"); 
+		    
+			mgr.makePersistent(user);			
+		}catch(Exception e){
+			System.out.println("CONTAINS USER IZUZETAK"); 
+			e.printStackTrace();
+		}finally {
+		
 			mgr.close();
+			System.out.println("UPDATE USER CLOSE");
 		}
+		System.out.println("UPDATE USER END");
 		return user;
 	}
 
@@ -157,15 +165,25 @@ public class PosterEndpoint {
 	private boolean containsUser(User user) {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
+		
 		try {
-			mgr.getObjectById(User.class, user.getId());
+			
+			if (user.getKey() == null) {
+				System.out.println("CONTAINS USER KEY FALSE");
+	            return false;
+			}
+			System.out.println("CONTAINS USER getObjectById");
+			mgr.getObjectById(User.class, user.getKey());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
+			System.out.println("CONTAINS USER FALSE");
 		} finally {
 			mgr.close();
 		}
+		System.out.println("CONTAINS USER:: " + contains);
 		return contains;
 	}
+	
 	
 	/**
 	 * This method gets the entity having androidId. It uses HTTP GET method.
@@ -308,7 +326,7 @@ public class PosterEndpoint {
 	public Album insertAlbum(Album album) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (album.getId() != null) {
+			if (album.getKey() != null) {
 				if (containsAlbum(album)) {
 					throw new EntityExistsException("Object already exists");
 				}
@@ -332,12 +350,13 @@ public class PosterEndpoint {
 	public Album updateAlbum(Album album) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (album.getId() != null) {
+			
 				if (!containsAlbum(album)) {
 					throw new EntityNotFoundException("Object does not exist");
 				}
-			}
+			
 			mgr.makePersistent(album);
+			mgr.flush();
 		} finally {
 			mgr.close();
 		}
@@ -365,7 +384,10 @@ public class PosterEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Album.class, album.getId());
+			if (album.getKey() == null) {
+	            return false;
+			}
+			mgr.getObjectById(Album.class, album.getKey());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {
@@ -542,7 +564,7 @@ public class PosterEndpoint {
 	public Image insertImage(Image image) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (image.getId() != null) {
+			if (image.getKey() != null) {
 				if (containsImage(image)) {
 					throw new EntityExistsException("Object already exists");
 				}
@@ -566,12 +588,13 @@ public class PosterEndpoint {
 	public Image updateImage(Image image) {
 		PersistenceManager mgr = getPersistenceManager();
 		try {
-			if (image.getId() != null) {
+			
 				if (!containsImage(image)) {
 					throw new EntityNotFoundException("Object does not exist");
 				}
-			}
+			
 			mgr.makePersistent(image);
+			mgr.flush();
 		} finally {
 			mgr.close();
 		}
@@ -599,7 +622,10 @@ public class PosterEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		boolean contains = true;
 		try {
-			mgr.getObjectById(Image.class, image.getId());
+			if (image.getKey() == null) {
+	            return false;
+			}
+			mgr.getObjectById(Image.class, image.getKey());
 		} catch (javax.jdo.JDOObjectNotFoundException ex) {
 			contains = false;
 		} finally {
@@ -614,6 +640,7 @@ public class PosterEndpoint {
 	 *
 	 * @param androidId attribute of the entity to be deleted.
 	 */
+	@SuppressWarnings("unchecked")
 	@ApiMethod(name = "removeImageByAndroidId", path="posterendpoint/image/{androidId}/")
 	public void removeImageByAndroidId(@Named("androidId") Long androidId) {
 		PersistenceManager mgr = getPersistenceManager();
@@ -642,6 +669,7 @@ public class PosterEndpoint {
 	 * @param androidId the primary key of the java bean.
 	 * @return The entity with androidId.
 	 */
+	@SuppressWarnings("unchecked")
 	@ApiMethod(name = "getImageByAndroidId", path="posterendpoint/image/{androidId}/")
 	public Image getImageByAndroidId(@Named("androidId") Long androidId) {
 		PersistenceManager mgr = getPersistenceManager();
