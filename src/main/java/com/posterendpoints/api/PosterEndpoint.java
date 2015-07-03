@@ -1,13 +1,17 @@
 package com.posterendpoints.api;
 
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.List;
+
 import javax.annotation.Nullable;
 import javax.inject.Named;
 import javax.jdo.PersistenceManager;
 import javax.jdo.Query;
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityNotFoundException;
+
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiNamespace;
@@ -124,25 +128,32 @@ public class PosterEndpoint {
 		PersistenceManager mgr = getPersistenceManager();
 		System.out.println("UPDATE USER START");
 		System.out.println("UPDATE USER ID: " + user.getKey().getId());
-
+		User userResponse = null;
 		try {		
 			if (!containsUser(user)) {
 				System.out.println("!CONTAINS USER");
 				throw new EntityNotFoundException("Object does not exist");
 			}
 		    System.out.println("CONTAINS USER TRUE"); 
-		    
-			mgr.makePersistent(user);			
+		    userResponse = getUserByAndroidId(user.getAndroidId()); // mgr.getObjectById(User.class, user.getKey().getId());
+		   
+		    userResponse.setAlbums(user.getAlbums());
+			mgr.makePersistent(userResponse);
+			mgr.flush();
 		}catch(Exception e){
 			System.out.println("CONTAINS USER IZUZETAK"); 
-			e.printStackTrace();
+			
+			//e.printStackTrace(new PrintWriter(System.out));
+			StringWriter errors = new StringWriter();
+			e.printStackTrace(new PrintWriter(errors));
+			System.out.println(errors.toString()); 
 		}finally {
 		
 			mgr.close();
 			System.out.println("UPDATE USER CLOSE");
 		}
 		System.out.println("UPDATE USER END");
-		return user;
+		return userResponse;
 	}
 
 	/**
